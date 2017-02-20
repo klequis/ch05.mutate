@@ -2,7 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Forecast from '../Forecast';
+import Weather from '../Weather';
 import * as selectors from '../../store/selectors';
 import * as actionCreators from '../../store/actions';
 import * as style from './style';
@@ -22,7 +22,7 @@ class App extends Component {
           <div style={style.wrapper}>
             <h1>Success</h1>
             <div style={style.row}>
-              <Forecast />
+              <Weather />
             </div>
           </div>
         );

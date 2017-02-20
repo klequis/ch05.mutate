@@ -1,5 +1,5 @@
 export const wrapper = {
-  width: '22rem',
+  width: '62rem',
   padding: '1rem',
   overflowX: 'hidden',
   overflowY: 'auto',
