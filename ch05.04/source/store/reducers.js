@@ -2,33 +2,66 @@ import { combineReducers } from 'redux';
 import { merge } from 'ramda';
 import * as ku from '../../lib/ke-utils';
 
-export const byId = (state = {}, { type, payload }) => {
-  ku.logFunction('ids');
+export const branding = (state = {}, { type, payload }) => {
+  ku.logFunction('reducer.branding');
   const o = {
     state,
     type,
     payload,
   };
-  ku.log('ids.params', o, 'red');
+  ku.log('branding.params', o, 'red');
+
   switch (type) {
-    case 'app/replaceDays':
+    case 'app/replaceWeather':
+      return payload.branding;
+    default:
+      return state;
+  }
+};
+
+export const days = (state = {}, { type, payload }) => {
+  ku.logFunction('reducer.days');
+  const o = {
+    state,
+    type,
+    payload,
+  };
+  ku.log('days.params', o, 'red');
+  switch (type) {
+    case 'app/replaceWeather':
       return payload.days;
     default:
       return state;
   }
 };
 
-export const ids = (state = [], { type, payload }) => {
-  ku.logFunction('ids');
+export const location = (state = {}, { type, payload }) => {
+  ku.logFunction('reducer.location');
   const o = {
     state,
     type,
     payload,
   };
-  ku.log('ids.params', o, 'red');
+  ku.log('location.params', o, 'red');
   switch (type) {
-    case 'app/replaceDays':
-      return payload.ids;
+    case 'app/replaceWeather':
+      return payload.location;
+    default:
+      return state;
+  }
+};
+
+export const currentObservation = (state = {}, { type, payload }) => {
+  ku.logFunction('reducer.currentObservation');
+  const o = {
+    state,
+    type,
+    payload,
+  };
+  ku.log('currentObservation.params', o, 'red');
+  switch (type) {
+    case 'app/replaceWeather':
+      return payload.current_observation;
     default:
       return state;
   }
@@ -59,9 +92,11 @@ export const requests = (state = {}, { type, payload, meta }) => {
 };
 
 export default combineReducers({
-  days: combineReducers({
-    byId,
-    ids,
+  weather: combineReducers({
+    branding,
+    days,
+    location,
+    currentObservation,
   }),
   ui: combineReducers({
     toast,

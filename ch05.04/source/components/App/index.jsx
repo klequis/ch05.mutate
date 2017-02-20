@@ -10,16 +10,17 @@ import * as ku from '../../../lib/ke-utils';
 
 class App extends Component {
   componentWillMount() {
-    this.props.requestReadForecast();
+    this.props.requestReadWeather(); // this is an action that calls api
   }
 
   render() {
-    const { readForecastRequest } = this.props; // reports success or failure
-
-    switch (readForecastRequest.status) {
+    const { readWeatherRequest } = this.props; // reports success or failure
+         // readWeatherRequest is a prop based on a selctor
+    switch (readWeatherRequest.status) {
       case 'success':
         return (
           <div style={style.wrapper}>
+            <h1>Success</h1>
             <div style={style.row}>
               <Forecast />
             </div>
@@ -28,7 +29,8 @@ class App extends Component {
       case 'failure':
         return (
           <div style={style.notice}>
-            {(readForecastRequest.error.message === 'Failed to fetch')
+            <h1>Failure</h1>
+            {(readWeatherRequest.error.message === 'Failed to fetch')
               ? 'No connection, try again later!'
               : 'Hmm... Something didn\'t go as planned.'
             }
@@ -37,6 +39,7 @@ class App extends Component {
       default:
         return (
           <div style={style.notice}>
+            <h1>default</h1>
             Loading...
           </div>
         );
@@ -45,12 +48,12 @@ class App extends Component {
 }
 
 App.propTypes = {
-  requestReadForecast: PropTypes.func.isRequired,
-  readForecastRequest: PropTypes.object.isRequired,
+  requestReadWeather: PropTypes.func.isRequired,
+  readWeatherRequest: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  readForecastRequest: selectors.getRequest(state, 'readForecast'),
+  readWeatherRequest: selectors.getRequest(state, 'readWeather'),
 });
 
 export default connect(mapStateToProps, actionCreators)(App);

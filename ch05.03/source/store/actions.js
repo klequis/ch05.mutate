@@ -2,21 +2,12 @@ import api from '../api';
 import { v4 } from 'uuid';
 import * as ku from '../../lib/ke-utils';
 
-export const noop = (explanation) => ({
-  type: 'app/noop',
-  payload: explanation,
-});
-
 /*
 export const insertNote = (note) => ({
   type: 'app/insertNote',
   payload: note,
 });
 */
-export const replaceDays = (notes) => ({
-  type: 'app/replaceDays',
-  payload: notes,
-});
 
 /*
 export const updateNote = (content, id, timestamp = Date.now()) => ({
@@ -37,11 +28,6 @@ export const closeNote = () => ({
   type: 'app/closeNote',
 });
 */
-export const openDay = (id) => ({
-  type: 'app/openDay',
-  payload: { id },
-});
-
 export const setToast = (message, level = 'info', id = v4() ) => ({
   type: 'app/setToast',
   payload: {
@@ -102,6 +88,19 @@ export const createRequestThunk = ({ request, key, start = [], success = [], fai
       });
   };
 };
+
+export const replaceDays = (notes) => ({
+  type: 'app/replaceDays',
+  payload: notes,
+});
+export const openDay = (id) => ({
+  type: 'app/openDay',
+  payload: { id },
+});
+export const noop = (explanation) => ({
+  type: 'app/noop',
+  payload: explanation,
+});
 
 export const requestReadForecast = createRequestThunk({
   request: api.days.readList,

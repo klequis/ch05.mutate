@@ -1,75 +1,52 @@
-Forecast
-------------------------------------------------------------------------------------------------
-requestReadNotes()        requestReadForecast()
-readNotesRequest()        readForecastRequest()
-'readNotes'               'readForecast'
+#redux-edge.ch05.mutate
+
+**api/index.js**
+***
+- weatherURL: change to weatherUnderground
+- Normalizr: not needed?
+    - const daySchema: delete
+    - const dayListSchema: delete
+- export default.dys.readList
+    - const nd = normalize(): delete
+    - const o = (create shape of state): delete
+- App: No change
+- Forecast
+    - days.map: remove until data is flowing
+- actions: stay the same?
+- index: say the same
+- reducers: WILL NEED TO CHANGE
+- selectors: WILL NEED TO CHANGE
 
 
-actions.js
-------------------------------------------------------------------------------------------------
-
-export const requestReadNotes     requestReadForecast
------------------------------     -------------------
-request: api.notes.readList       api.days.readList
-key: 'readNotes'                  'readForecast'
-replaceNotes                      replaceDays             ( is part of success: )
-(notes) =>                        (days) =>
-notes.ids.length                  days.ids.length         ( P: do days have IDs? )
-openNote                          openDays
-notes.ids                         days.ids
-
-export const openNote             openDay
----------------------             -------
-type: 'app/openNote'              'app/openDay'
-
-
-reducers.js
-------------------------------------------------------------------------------------------------
-
-export const byId
------------------
-case 'app/replaceNotes'           'app/replaceDays'
-return payload.notes              payload.days
-
-export default combineReducers
-------------------------------
-notes:                            days:
-openNoteId                        DELETE
-
-
-selectors.js
-------------------------------------------------------------------------------------------------
-export const getNotes         getDays
----------------------
-state.notes.ids.map           state.days.ids.map
-export const getNote          getDay
-
-
-api/index.js
-------------------------------------------------------------------------------------------------
-const notes = new Schema('notes')      const days = new Schema('days')
-
-export default
---------------
-notes: {                               days: {
-fetchJson('/api/notes')                fetchJson('weatherURL')
-arrayOf(notes)                         arrayOf(days)
-notes: normalized.entities.notes       days: normalized.days
-
-
-fetchJson.fetch(url  ...
-------------------------------------------------------------------------------------------------
-fetch(url, {
-    ...options,
-    headers: {
-      ...options.headers,
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-  })
+## Data
+const weatherURL = 'http://api.wunderground.com/api/8e038883d8fbbe15/forecast/geolookup/conditions/q/CA/San_Francisco.json';
 
 
 
-URL
-------------------------------------------------------------------------------------------------
-http://api.openweathermap.org/data/2.5/forecast?q=livermore,us&units=imperial&APPID=cd605b9a7b8b517b82492ee7bf47a295
+branding:           current_observation.image
+location:           current_observation.display_location{}
+observation_time:   current_observation.observation_time "
+weather:            current_observation.weather ""
+temp_f:             current_observation.temp_f num
+temp_c:             current_observation.temp_c num
+relative_humidity:  current_observation.relative_humidity ""
+wind_dir:           current_observation.wind_dir ""
+wind_mph:           current_observation.wind_mph num
+wind_gust_mph:      current_observation.wind_gust_mph ""
+wind_kph:           current_observation.wind_kph num
+wind_gust_kpy:      current_observation.wind_gust_kph ""
+pressure_mp:        current_observation.pressure_mb ""
+pressure_in:        current_observation.pressure_in ""
+pressure_trend:     current_observation.pressure_trend ""
+dewpoint_f:         current_observation.dewpoint_f num
+dewpoint_c:         current_observation.dewpoint_c num
+heat_index_f:       current_observation.heat_index_f "
+heat_index_c;       current_observation.heat_index_c ""
+windchill_f:        current_observation.windchill_f ""
+windchill_c:        current_observation.windchill_c ""
+feelslike_f:        current_observation.feelslike_f "
+feelslike_c:        current_observation.feelslike_c "
+uv:                 current_observation.UV ""
+icon:               current_observation.icon "
+icon_url:           current_observation.icon_url "url" 
+days:               forecast.simpleforecast.forecastday[{}]

@@ -1,12 +1,7 @@
 import 'isomorphic-fetch';
 import { normalize, schema, arrayOf } from 'normalizr';
 import * as ku from '../../lib/ke-utils';
-const weatherURL = 'http://api.openweathermap.org/data/2.5/forecast?q=livermore,us&units=imperial&APPID=cd605b9a7b8b517b82492ee7bf47a295';
-
-
-// const days = new Schema('days');
-const daySchema = new schema.Entity('days', {}, { idAttribute: 'dt' });
-const dayListSchema = new schema.Array(daySchema);
+const weatherURL = 'http://api.wunderground.com/api/8e038883d8fbbe15/forecast/geolookup/conditions/q/CA/San_Francisco.json';
 
 export const rejectErrors = (res) => {
   const { status } = res;
@@ -28,14 +23,37 @@ export default {
       ku.logFunction('readList');
       return fetchJson(weatherURL)
         .then((data) => {
-          data = data.list;
-          ku.log('data', data, 'red');
-          // const normalized = normalize(data, arrayOf(days));
-          const nd = normalize(data, dayListSchema);
-          ku.log('normalized', nd, 'red');
           const o = {
-            days: nd.entities.days || {},
-            ids: nd.result,
+            branding: data.current_observation.image,
+            current_observation: {
+              station_id: data.current_observation.station_id,
+              observation_time: data.current_observation.observation_time,
+              weather: data.current_observation.weather,
+              temp_f: data.current_observation.temp_f,
+              temp_c: data.current_observation.temp_c,
+              relative_humidity: data.current_observation.relative_humidity,
+              wind_dir: data.current_observation.wind_dir,
+              wind_mph: data.current_observation.wind_mph,
+              wind_gust_mph: data.current_observation.wind_gust_mph,
+              wind_kph: data.current_observation.wind_kph,
+              wind_gust_kpy: data.current_observation.wind_gust_kph,
+              pressure_mp: data.current_observation.pressure_mb,
+              pressure_in: data.current_observation.pressure_in,
+              pressure_trend: data.current_observation.pressure_trend,
+              dewpoint_f: data.current_observation.dewpoint_f,
+              dewpoint_c: data.current_observation.dewpoint_c,
+              heat_index_f: data.current_observation.heat_index_f,
+              heat_index_c: data.current_observation.heat_index_c,
+              windchill_f: data.current_observation.windchill_f,
+              windchill_c: data.current_observation.windchill_c,
+              feelslike_f: data.current_observation.feelslike_f,
+              feelslike_c: data.current_observation.feelslike_c,
+              uv: data.current_observation.UV,
+              icon: data.current_observation.icon,
+              icon_url: data.current_observation.icon_url,
+            },
+            location: data.current_observation.display_location,
+            days: data.forecast.simpleforecast.forecastday,
           };
           ku.log('o', o, 'red');
           return o;
