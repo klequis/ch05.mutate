@@ -3,6 +3,7 @@ import { normalize, schema, arrayOf } from 'normalizr';
 import * as ku from '../../lib/ke-utils';
 const weatherURL = 'http://api.openweathermap.org/data/2.5/forecast?q=livermore,us&units=imperial&APPID=cd605b9a7b8b517b82492ee7bf47a295';
 
+
 // const days = new Schema('days');
 const daySchema = new schema.Entity('days', {}, { idAttribute: 'dt' });
 const dayListSchema = new schema.Array(daySchema);

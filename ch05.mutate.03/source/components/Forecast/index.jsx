@@ -5,46 +5,35 @@ import * as actionCreators from '../../store/actions';
 import * as selectors from '../../store/selectors';
 import * as style from './style';
 
-//                selector, selector,   action,   action,            selector
-const NotesList = ({ notes, openNoteId, openNote, requestCreateNote, createNoteRequest } ) => (
+const Forecast = ({ days } ) => (
   <div style={style.wrapper}>
-    <h1>Number of Notes: {notes.length}</h1>
-    {(notes.length === 0)
-      ? <div style={style.blankslate}>No notes</div>
-      : notes.map((note) => (
+    <h1>Number of Days: {days.length}</h1>
+    {(days.length === 0)
+      ? <div style={style.blankslate}>No days</div>
+      : days.map((day) => (
           <button
-            key={note.id}
-            style={(note.id === openNoteId)
-              ? { ...style.note, ...style.selected }
-              : style.note
-            }
-            onClick={() => openNote(note.id)}
+            key={day.id}
+            style={style.note}
             >
-            {note.content === ''
-              ? <span style={style.newNoteLabel}>New note...</span>
-              : note.content
-            }
+            Clouds: {day.clouds.all}<br></br>
+            dt: {day.dt_txt}<br></br>
+            humidity: {day.main.humidity}<br></br>
+            pressure: {day.main.pressure}<br></br>
+            temp: {day.main.temp}<br></br>
+            temp_max: {day.main.temp_max}<br></br>
+            temp_min: {day.main.temp_min}<br></br>
+            description: {day.weather[0].description}<br></br>
+            icon: {day.weather[0].icon}<br></br>
+            wind deg: {day.wind.deg}<br></br>
+            wind speed: {day.wind.speed}<br></br>
           </button>
       ))
     }
   </div>
 );
 
-NotesList.propTypes = {
-  notes: PropTypes.arrayOf(PropTypes.shape({
-    content: PropTypes.string,
-    id: PropTypes.string.isRequired,
-  })).isRequired,
-  openNoteId: PropTypes.string,
-  openNote: PropTypes.func.isRequired,
-  requestCreateNote: PropTypes.func.isRequired,
-  createNoteRequest: PropTypes.object.isRequired,
-};
-
 const mapStateToProps = (state) => ({
-  notes: selectors.getNotes(state),
-  openNoteId: selectors.getOpenNoteId(state),
-  createNoteRequest: selectors.getRequest(state, 'createNote'),
+  days: selectors.getDays(state),
 });
 
-export default connect(mapStateToProps, actionCreators)(NotesList);
+export default connect(mapStateToProps, actionCreators)(Forecast);

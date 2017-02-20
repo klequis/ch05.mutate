@@ -1,18 +1,33 @@
 import { combineReducers } from 'redux';
 import { merge } from 'ramda';
+import * as ku from '../../lib/ke-utils';
 
 export const byId = (state = {}, { type, payload }) => {
+  ku.logFunction('ids');
+  const o = {
+    state,
+    type,
+    payload,
+  };
+  ku.log('ids.params', o, 'red');
   switch (type) {
     case 'app/replaceDays':
-      return payload.Days;
+      return payload.days;
     default:
       return state;
   }
 };
 
 export const ids = (state = [], { type, payload }) => {
+  ku.logFunction('ids');
+  const o = {
+    state,
+    type,
+    payload,
+  };
+  ku.log('ids.params', o, 'red');
   switch (type) {
-    case 'app/replaceNotes':
+    case 'app/replaceDays':
       return payload.ids;
     default:
       return state;

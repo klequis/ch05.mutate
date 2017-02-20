@@ -19,7 +19,6 @@ export const addNoteButton = {
 
 export const note = {
   width: '100%',
-  height: '3rem',
   marginBottom: '0.2rem',
   padding: '0.8rem 1rem',
   textAlign: 'left',
